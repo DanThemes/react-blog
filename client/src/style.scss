@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Bree Serif', serif;
+}
+* {
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  padding: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bree Serif', serif;
+}
+
+a {
+  color: #bd9e59;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+a:hover {
+  color: #997d41;
+}
+nav a {
+  position: relative;
+  font-family: 'Bree Serif', serif;
+  padding: 0.5rem;
+  border-bottom: 2px solid transparent;
+}
+nav a.active {
+  color: #997d41;
+}
+nav a:hover::after {
+  content: '';
+  position: absolute;
+  bottom:-0.125rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  height: 0.25rem;
+  // z-index: -1;
+  background-image: url("../public/underline.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header-auth a {
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.5rem;
+}
+
+
+// .underline {
+//   position: relative;
+// }
+// .underline::after {
+//   content: "";
+//   position: absolute;
+//   bottom: -0.125rem;
+//   left: -0.5rem;
+//   right: -0.5rem;
+//   height: 0.75rem;
+//   z-index: -1;
+//   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/664131/underline.svg");
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+
+// p > .underline {
+//   font-weight: 400;
+// }
+// p > .underline::after {
+//   bottom: -0.2rem;
+//   height: 0.5rem;
+//   left: -0.25rem;
+//   right: -0.25rem;
+// }
