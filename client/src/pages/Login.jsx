@@ -44,12 +44,14 @@ const Login = () => {
         <input 
           type="text" 
           placeholder="Username" 
+          name="username"
           value={username} 
           onChange={e => setUsername(e.target.value)} 
         />
         <input 
           type="password" 
           placeholder="Password" 
+          name="password"
           value={password} 
           onChange={e => setPassword(e.target.value)} 
         />

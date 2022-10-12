@@ -12,6 +12,7 @@ mongoose.connect('mongodb://localhost:27017/blog');
 dotenv.config();
 
 app.use(cors());
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
 app.use('/api/auth/', authRoutes);
