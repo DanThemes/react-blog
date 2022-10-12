@@ -9,6 +9,12 @@ const reducer = (state, action) => {
         ...state,
         user: payload
       }
+      
+    case ACTIONS.LOG_OUT:
+      return {
+        ...state,
+        user: null
+      }
 
     default:
       return state;

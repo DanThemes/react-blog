@@ -2,22 +2,26 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import { ACTIONS } from '../context/Actions';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const { dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
+  
+  // Logged in users don't have access to this page
+  if (user) return <Navigate to="/" replace />
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setIsLoading(true);
     setError(false);
+
+    if (!username) return setError('Enter a username.');
+    if (!password) return setError('Enter a password.');
 
     try {
       const login = await axios.post('http://localhost:3001/api/auth/login', {
@@ -26,20 +30,15 @@ const Login = () => {
       });
 
       dispatch({ type: ACTIONS.LOG_IN, payload: login.data });
-      localStorage.setItem('user', JSON.stringify(login.data));
       navigate('/');
     } catch (err) {
       setError(err.response.data)
     }
-
-    setIsLoading(false);
   }
 
   
   return (
     <div>
-      {isLoading && <p>Loading ...</p>}
-
       <form onSubmit={handleSubmit}>
         <input 
           type="text" 

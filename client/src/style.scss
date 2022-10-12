@@ -8,6 +8,30 @@ html, body {
 * {
   box-sizing: border-box;
 }
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input, textarea, button {
+  font-family: 'Bree Serif', serif;
+}
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+  border-radius: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+}
+button {
+  padding: 1rem;
+  background-color: #bd9e59;
+  border: 1px solid #bd9e59;
+  color: #fff;
+  cursor: pointer;
+}
 
 header {
   display: flex;
@@ -20,11 +44,13 @@ header {
 .container {
   max-width: 1200px;
   padding: 1rem;
+  margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bree Serif', serif;
 }
+
 
 a {
   color: #bd9e59;
@@ -43,6 +69,7 @@ nav a {
 nav a.active {
   color: #997d41;
 }
+nav a.active::after,
 nav a:hover::after {
   content: '';
   position: absolute;
@@ -56,6 +83,12 @@ nav a:hover::after {
   background-size: cover;
 }
 
+.header-user,
+.header-auth {
+  display: flex;
+  align-items: center;
+}
+.header-user,
 .header-auth a {
   font-size: 0.75rem;
   line-height: 1;
@@ -63,28 +96,3 @@ nav a:hover::after {
 }
 
 
-// .underline {
-//   position: relative;
-// }
-// .underline::after {
-//   content: "";
-//   position: absolute;
-//   bottom: -0.125rem;
-//   left: -0.5rem;
-//   right: -0.5rem;
-//   height: 0.75rem;
-//   z-index: -1;
-//   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/664131/underline.svg");
-//   background-repeat: no-repeat;
-//   background-size: cover;
-// }
-
-// p > .underline {
-//   font-weight: 400;
-// }
-// p > .underline::after {
-//   bottom: -0.2rem;
-//   height: 0.5rem;
-//   left: -0.25rem;
-//   right: -0.25rem;
-// }

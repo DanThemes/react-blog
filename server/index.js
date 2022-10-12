@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
+const articleRoutes = require('./routes/articles');
 const cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/blog');
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
 app.use('/api/auth/', authRoutes);
+app.use('/api/articles/', articleRoutes);
 
 
 

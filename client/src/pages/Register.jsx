@@ -1,13 +1,19 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  // Logged in users don't have access to this page
+  if (user) return <Navigate to="/" replace />;
 
   const handleSubmit = async e => {
     e.preventDefault();
