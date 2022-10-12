@@ -10,6 +10,7 @@ import Articles from './pages/Articles';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { ContextProvider } from './context/AuthContext';
 
 import './style.scss';
 
@@ -17,7 +18,7 @@ import './style.scss';
 
 const App = () => {
   return (
-    <div>
+    <ContextProvider>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -29,7 +30,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </ContextProvider>
   )
 }
 

@@ -1,26 +1,45 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios';
+import { ACTIONS } from '../context/Actions';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const { dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(false);
 
     try {
       const login = await axios.post('http://localhost:3001/api/auth/login', {
         username,
         password
       });
-      console.log(login.data)
+
+      dispatch({ type: ACTIONS.LOG_IN, payload: login.data });
+      localStorage.setItem('user', JSON.stringify(login.data));
+      navigate('/');
     } catch (err) {
-      console.log(err.message)
+      setError(err.response.data)
     }
+
+    setIsLoading(false);
   }
 
+  
   return (
     <div>
+      {isLoading && <p>Loading ...</p>}
+
       <form onSubmit={handleSubmit}>
         <input 
           type="text" 
@@ -36,6 +55,8 @@ const Login = () => {
         />
         <button>Log in</button>
       </form>
+
+      {error && <p>{error}</p>}
     </div>
   )
 }
