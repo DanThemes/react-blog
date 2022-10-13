@@ -17,6 +17,7 @@ const config = {
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
   secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
 }
+console.log(config)
 
 const CreateArticle = () => {
   const [image, setImage] = useState(null)
@@ -35,6 +36,7 @@ const CreateArticle = () => {
       console.log(response)
       return response.location;
     } catch (err) {
+      console.log(err)
       setError(err);
     }
   }
@@ -44,10 +46,13 @@ const CreateArticle = () => {
     setError(false);
 
     const imageURL = image ? await handleUpload() : null;
-
+    // console.log(imageURL)
+    // return;
+    
     // save article to db
     try {
-      const article = await axios.post('http://localhost:3001/api/articles/new', {
+      const endpoint = `${process.env.REACT_APP_API_URL}/articles/new`;
+      const article = await axios.post(endpoint, {
         image: imageURL,
         title,
         content,
@@ -86,7 +91,7 @@ const CreateArticle = () => {
         <button>Save</button>
       </form>
 
-      {error && <p>{error}</p>}
+      {error && <p>{JSON.stringify(error)}</p>}
     </div>
   )
 }

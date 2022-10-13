@@ -24,6 +24,7 @@ const EditArticle = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [error, setError] = useState(false)
+  const [article, setArticle] = useState(false)
 
 
   const { user } = useContext(AuthContext)
@@ -36,6 +37,7 @@ const EditArticle = () => {
       const endpoint = `${process.env.REACT_APP_API_URL}/articles/${id}`;
       const { data } = await axios.get(endpoint);
       console.log(data)
+      setArticle(data)
       setTitle(data.title)
       setContent(data.content)
     }
@@ -79,9 +81,10 @@ const EditArticle = () => {
 
   return (
     <div>
-      <h2>Create a new article</h2>
+      <h2>Edit an article</h2>
 
-      <form onSubmit={handleSubmit}>
+      {article.image && article.title && <img src={article.image} alt={title} />}
+      <form onSubmit={handleSubmit} className="full-form">
         <input
           type="file"
           name="image"

@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
   }
   const article = await Article.findById(req.params.id)
 
-  if (!article) return res.status(400).json(err);
+  if (!article) return res.status(404).json("Article not found");
 
   res.status(200).json(article);
 })
