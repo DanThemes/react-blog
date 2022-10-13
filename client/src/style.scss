@@ -43,13 +43,22 @@ header {
 
 .container {
   max-width: 1200px;
-  padding: 1rem;
+  padding: 3rem 1rem;
   margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bree Serif', serif;
+  line-height: 1;
+  margin: 0 0 1rem 0;
 }
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.75rem; }
+h5 { font-size: 1.5rem; }
+h6 { font-size: 1.25rem; }
 
 
 a {
@@ -111,11 +120,43 @@ nav a:hover::after,
   padding: 0.5rem;
 }
 
-.ql-editor {
+main .ql-editor {
   height: 30rem;
   max-height: 50vh;
 }
 
 .article-content p {
   margin: 0;
+}
+
+.articles article img {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+}
+.articles article h6 {
+  margin: 1rem 0 0 0;
+}
+.articles article {
+  border-top: 1px solid #ddd;
+  padding-top: 3rem;
+  margin-top: 3rem;
+}
+
+.big-button {
+  background: #bd9e59;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 1rem;
+  display: inline-block;
+  margin: 0 1rem 0 0;
+}
+.big-button:hover {
+  background: #997d41;
+  color: #fff;
+}
+
+.full-form > * {
+  width: 100%;
+  margin-bottom: 0.5rem;
 }

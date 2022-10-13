@@ -15,6 +15,7 @@ import { ContextProvider } from './context/AuthContext';
 
 import './style.scss';
 import CreateArticle from './pages/CreateArticle';
+import EditArticle from './pages/EditArticle';
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
             <Route path='/articles' element={<Articles />} />
             <Route path='/articles/new' element={<CreateArticle />} />
             <Route path='/articles/:id' element={<Article />} />
+            <Route path='/articles/:id/edit' element={<EditArticle />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
 

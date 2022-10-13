@@ -20,7 +20,7 @@ const Articles = () => {
 
   return (
     <div className="articles">
-      <Link to="/articles/new">Create new article</Link>
+      <Link to="/articles/new" className="big-button">Create new article</Link>
 
       {articles.map(article => (
         <article key={article._id}>
@@ -33,8 +33,8 @@ const Articles = () => {
               <img src="https://via.placeholder.com/800x150" alt={article.title} />
             </Link>
           )}
-          
-          <Link to={`/articles/${article._id}`}><h3>{article.title}</h3></Link>
+
+          <Link to={`/articles/${article._id}`}><h6>{article.title}</h6></Link>
 
           <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content.replace(/<[^>]+>/g, '').slice(0, 100) + " ...") }}></p>
 

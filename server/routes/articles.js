@@ -36,4 +36,23 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(article);
 })
 
+// Update
+router.post('/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id)
+  if (!article) return res.status(400).json(err);
+
+  const filter = { _id: req.params.id }
+  const newValues = {
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author
+  }
+  if (req.body.image) {
+    newValues.image = req.body.image
+  }
+
+  const updatedArticle = await Article.updateOne(filter, newValues);
+  res.status(201).json(updatedArticle);
+})
+
 module.exports = router;

@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import sanitizeHtml from 'sanitize-html';
+import { AuthContext } from '../context/AuthContext';
 
 const Article = () => {
   const [ article, setArticle ] = useState('')
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -37,8 +39,12 @@ const Article = () => {
       )}
       <div className="article-meta">
           <p>Author: {article.author.username}</p>
+          <p>Date: {new Date(article.createdAt).toDateString()}</p>
       </div>
-      <h3>{article.title}</h3>
+      
+      {user.username === article.author.username && <Link to={`/articles/${article._id}/edit`}>Edit</Link>}
+
+      <h1>{article.title}</h1>
       <div className="article-content" dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }} />
     </article>
   )
