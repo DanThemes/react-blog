@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import sanitizeHtml from 'sanitize-html';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -23,9 +24,20 @@ const Articles = () => {
 
       {articles.map(article => (
         <article key={article._id}>
-          <img src="https://via.placeholder.com/800x150" alt="article image" />
-          <h3>{article.title}</h3>
-          <p>{article.content.slice(0, 10) + " ..."}</p>
+          {article.image ? (
+            <Link to={`/articles/${article._id}`}>
+              <img src={article.image} alt={article.title} />
+            </Link>
+          ) : (
+            <Link to={`/articles/${article._id}`}>
+              <img src="https://via.placeholder.com/800x150" alt={article.title} />
+            </Link>
+          )}
+          
+          <Link to={`/articles/${article._id}`}><h3>{article.title}</h3></Link>
+
+          <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content.replace(/<[^>]+>/g, '').slice(0, 100) + " ...") }}></p>
+
           <Link to={`/articles/${article._id}`}>Read more</Link>
         </article>
       ))}

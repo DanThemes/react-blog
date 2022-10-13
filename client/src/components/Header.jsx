@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react'
-import { Navigate, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { ACTIONS } from '../context/Actions'
 import { AuthContext } from '../context/AuthContext'
 
@@ -25,9 +25,7 @@ const Header = () => {
       {user ? (
         <div className="header-user">
           <span>Welcome, {user.username}.</span>
-          <nav>
-            <a href="#" className="highlight" onClick={handleLogout}>Logout</a>
-          </nav>
+          <button className="small-link" onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <nav>

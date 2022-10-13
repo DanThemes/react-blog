@@ -70,7 +70,8 @@ nav a.active {
   color: #997d41;
 }
 nav a.active::after,
-nav a:hover::after {
+nav a:hover::after,
+.small-link:hover::after {
   content: '';
   position: absolute;
   bottom:-0.125rem;
@@ -88,7 +89,10 @@ nav a:hover::after {
   display: flex;
   align-items: center;
 }
-.header-user,
+.header-user {
+  font-size: 0.75rem;
+  line-height: 1;
+}
 .header-auth a {
   font-size: 0.75rem;
   line-height: 1;
@@ -96,3 +100,22 @@ nav a:hover::after {
 }
 
 
+.small-link {
+  position: relative;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: #bd9e59;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.5rem;
+}
+
+.ql-editor {
+  height: 30rem;
+  max-height: 50vh;
+}
+
+.article-content p {
+  margin: 0;
+}

@@ -13,8 +13,10 @@ router.get('/', async (req, res) => {
 // Create
 router.post('/new', async (req, res) => {
   const article = new Article({
+    image: req.body.image,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    author: req.body.author
   })
 
   const savedArticle = await article.save();

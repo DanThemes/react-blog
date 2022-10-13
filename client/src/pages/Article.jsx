@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import sanitizeHtml from 'sanitize-html';
 
 const Article = () => {
   const [ article, setArticle ] = useState('')
@@ -21,13 +22,24 @@ const Article = () => {
     }
 
     fetchArticle();
-  }, [])
+  }, [id, navigate])
+
+  if (!article) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <article>
-      <img src="https://via.placeholder.com/800x150" alt="article image" />
+      {article.image ? (
+        <img src={article.image} alt={article.title} />
+        ) : (
+        <img src="https://via.placeholder.com/800x150" alt={article.title} />
+      )}
+      <div className="article-meta">
+          <p>Author: {article.author.username}</p>
+      </div>
       <h3>{article.title}</h3>
-      <p>{article.content}</p>
+      <div className="article-content" dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }} />
     </article>
   )
 }
