@@ -3,18 +3,17 @@ import React, { useContext, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import S3 from 'react-aws-s3';
 import { AuthContext } from '../context/AuthContext';
 
-const config = {
-  bucketName: process.env.REACT_APP_AWS_S3_BUCKET,
-  dirName: 'react-blog',
-  region: process.env.REACT_APP_AWS_S3_REGION,
-  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-  s3Url: `https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com`,
-}
-const ReactS3Client = new S3(config);
+// const config = {
+//   bucketName: process.env.REACT_APP_AWS_S3_BUCKET,
+//   dirName: 'react-blog',
+//   region: process.env.REACT_APP_AWS_S3_REGION,
+//   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+//   secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+//   s3Url: `https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com`,
+// }
+// const ReactS3Client = new S3(config);
 
 const ArticleForm = ({ articleData, endpoint }) => {
   const [image, setImage] = useState(null)
@@ -29,11 +28,15 @@ const ArticleForm = ({ articleData, endpoint }) => {
 
   
   // upload image to AWS S3
-  const handleUpload = async () => {
+  const getPresignedUrl = async () => {
+    if (!image) return null;
+
     try {
-      const response = await ReactS3Client.uploadFile(image, image.name)
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/aws`, {
+        fileName: image.name
+      })
       console.log(response)
-      return response.location;
+      return response;
     } catch (err) {
       setError(err);
     }
@@ -44,14 +47,20 @@ const ArticleForm = ({ articleData, endpoint }) => {
     setError(false);
     setIsLoading(true);
 
-    const imageURL = image ? await handleUpload() : null;
+    const presignedUrl = await getPresignedUrl();
+    
+    if (image) {
+      // upload to AWS S3
+      await axios.put(presignedUrl.data.url, image)
+    }
 
-    console.log(imageURL)
+    const imageUrl = presignedUrl ? 
+      `https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/${presignedUrl.data.fileName}` : null
 
     // save article to db
     try {
       const options = {
-        image: imageURL,
+        image: imageUrl,
         title: !title ? articleData.title : title,
         content: !content ? articleData.content : content,
         author: {
@@ -65,7 +74,7 @@ const ArticleForm = ({ articleData, endpoint }) => {
         await axios.post(endpoint, options)
 
       console.log(article)
-      navigate(`/articles/${id}`)
+      navigate(`/articles/${article.data._id}`)
     } catch (err) {
       setError(err.response.data);
     }
