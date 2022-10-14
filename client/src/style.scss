@@ -31,6 +31,7 @@ button {
   border: 1px solid #bd9e59;
   color: #fff;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 header {
@@ -49,7 +50,7 @@ header {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bree Serif', serif;
-  line-height: 1;
+  line-height: 1.5;
   margin: 0 0 1rem 0;
 }
 
@@ -109,20 +110,31 @@ nav a:hover::after,
 }
 
 
-.small-link {
+.link {
   position: relative;
   background: transparent;
   border: 0;
   border-bottom: 2px solid transparent;
   color: #bd9e59;
-  font-size: 0.75rem;
+  font-size: 1rem;
   line-height: 1;
-  padding: 0.5rem;
+  padding: 0;
 }
+.link.small-link {
+  font-size: 0.75rem;
+}
+.link:hover {
+  color: #997d41;
+}
+.link + .link { margin-left: 0.5rem;}
+
 
 main .ql-editor {
   height: 30rem;
   max-height: 50vh;
+}
+form button {
+  font-size: 1rem;
 }
 
 .article-content p {
@@ -159,4 +171,30 @@ main .ql-editor {
 .full-form > * {
   width: 100%;
   margin-bottom: 0.5rem;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
+}
+.lds-dual-ring:after {
+  content: "";
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

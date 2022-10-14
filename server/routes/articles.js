@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Update
-router.post('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const article = await Article.findById(req.params.id)
   if (!article) return res.status(400).json(err);
 
@@ -53,6 +53,15 @@ router.post('/:id', async (req, res) => {
 
   const updatedArticle = await Article.updateOne(filter, newValues);
   res.status(201).json(updatedArticle);
+})
+
+// Delete
+router.delete('/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  if (!article) return res.status(400).json('Article not found');
+
+  await Article.deleteOne({ _id: article._id });
+  res.status(204).json('Article deleted.')
 })
 
 module.exports = router;

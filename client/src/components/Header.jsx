@@ -25,7 +25,7 @@ const Header = () => {
       {user ? (
         <div className="header-user">
           <span>Welcome, {user.username}.</span>
-          <button className="small-link" onClick={handleLogout}>Logout</button>
+          <button className="link small-link" onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <nav>
