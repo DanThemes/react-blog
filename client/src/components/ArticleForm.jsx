@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 // const config = {
@@ -23,11 +23,9 @@ const ArticleForm = ({ articleData, endpoint }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const { user } = useContext(AuthContext)
-  const { id } = useParams();
   const navigate = useNavigate();
 
-  
-  // upload image to AWS S3
+  // get a presigned url
   const getPresignedUrl = async () => {
     if (!image) return null;
 
@@ -51,11 +49,14 @@ const ArticleForm = ({ articleData, endpoint }) => {
     
     if (image) {
       // upload to AWS S3
-      await axios.put(presignedUrl.data.url, image)
+      const response = await axios.put(presignedUrl.data.url, image)
+      console.log(response)
     }
 
-    const imageUrl = presignedUrl ? 
-      `https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/${presignedUrl.data.fileName}` : null
+    const imageUrl = presignedUrl ? presignedUrl.data.fullFileName : null
+
+    console.log(imageUrl)
+    // return;
 
     // save article to db
     try {
@@ -76,7 +77,8 @@ const ArticleForm = ({ articleData, endpoint }) => {
       console.log(article)
       navigate(`/articles/${article.data._id}`)
     } catch (err) {
-      setError(err.response.data);
+      setError(err);
+      // setError(err.response.data);
     }
     setIsLoading(false);
   }

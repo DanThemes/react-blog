@@ -26,30 +26,33 @@ const Article = () => {
     }
 
     fetchArticle();
-  }, [id, navigate, endpoint])
+  }, [navigate, endpoint])
 
   // TODO: add a delete confirmation modal
   const handleDelete = async () => {
-    // try {
-    //   const response = await axios.delete(endpoint)
-    //   console.log(response)
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
+    const imageFileName = article.image.substring(article.image.indexOf('amazonaws.com/') + 14);
+    console.log(imageFileName)
+    // return
+    // delete image from AWS S3
     try {
-      console.log(article.image);
-      const imageName = article.image.slice(article.image.lastIndexOf('/') + 1);
-      console.log(imageName);
-      // return;
-      // return
-      // const response = await ReactS3Client.deleteFile(imageName);
-      // console.log(response);
+      console.log(article.image)
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/aws/${id}`)
+      console.log(response)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
 
-    // navigate('/articles')
+    // return;
+
+    // delete article from db
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/articles/${id}`, id);
+    } catch (err) {
+      console.log(err)
+    }
+
+    // return;
+    navigate('/articles')
   }
 
   if (!article) {
